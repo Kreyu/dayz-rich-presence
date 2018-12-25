@@ -9,10 +9,16 @@ import time
 import os
 import io
 
+if getattr(sys, 'frozen', False):
+    application_path = sys._MEIPASS
+elif __file__:
+    application_path = os.path.dirname(__file__)
+
 # Configuration
 hover_text  = "DayZ Rich Presence"
 client_id   = '527063225661915136'
 json_path   = os.getenv("LOCALAPPDATA") + "\DayZ\\rich_presence.json"
+tray_icon   = os.path.join(application_path, "icon.ico")
 
 # Actions
 def open_github(sysTrayIcon): 
@@ -65,8 +71,13 @@ class RPCUpdateLoop(threading.Thread):
                 print("DayZ process not running")
             time.sleep(15)
 
+# Closing the application
+def on_quit_callback(systray):
+    sys.exit()
+    systray.shutdown()
+
 # Threading
-systray = SysTrayIcon("icon.ico", hover_text, menu_options, default_menu_index=1)
+systray = SysTrayIcon(tray_icon, hover_text, menu_options, default_menu_index=1, on_quit=on_quit_callback)
 rpcloop = RPCUpdateLoop()
 
 rpcloop.start()

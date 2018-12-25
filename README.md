@@ -41,11 +41,25 @@ Navigate to the cloned repository
 cd dayz-rich-presence
 ```
 
-Create the client installer
+## Creating the installer
+
+Navigate to the client folder
 
 ```bash
-pyinstaller ./client/app.py
+cd client
 ```
+
+Run build script
+
+> **Note**: Before running the build script, ensure you are inside the *client* folder.
+
+```bash
+build.bat
+```
+
+The executable should be created in `dist/` folder.
+
+## Packing the mod
 
 Open **DayZ Tools** and launch the **Addon builder** tool, setting it up as follows:
 

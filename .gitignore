@@ -1,3 +1,11 @@
-.vscode
-.history
-client/__pycache__
+.vscode/
+.history/
+client/__pycache__/
+
+build/
+dist/
+DZRichPresence.spec
+
+client/build/
+client/dist/
+client/DZRichPresence.spec
