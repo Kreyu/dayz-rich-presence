@@ -57,3 +57,14 @@ Open **DayZ Tools** and launch the **Addon builder** tool, setting it up as foll
 
 - Addon prefix:  
   `RichPresence`
+
+# Running the client from the command line
+
+Simply navigate to the repository directory, and run:
+```
+cd client & python app.py
+```
+
+> **Note**: ensure you are launching the application from the *client directory*, otherwise the icon in the tray will be displayed as the default placeholder.
+
+The application icon should be visible in the tray, and all the debug prints should be visible in the console. To exit the application, right click on the tray icon and select **Quit** option.
