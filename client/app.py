@@ -37,7 +37,7 @@ class RPCUpdateLoop(threading.Thread):
 
     # Check if json file exists, create if not.
     def check_json(self, path):
-        if not os.path.isfile(path) or os.access(path, os.R_NOT_OK):
+        if not os.path.isfile(path) or not os.access(path, os.R_OK):
             with io.open(path, 'w') as json_file:
                 json_file.write(json.dumps({}))
 
