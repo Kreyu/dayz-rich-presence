@@ -57,6 +57,11 @@ Run build script
 build.bat
 ```
 
+If you want to run the **pyinstaller** without build script:
+```bash
+pyinstaller --windowed --onefile --add-data icon.ico;. --hidden-import pkg_resources --hidden-import infi.systray --name DZRichPresence --icon=./icon.ico app.py
+```
+
 The executable should be created in `dist/` folder.
 
 ## Packing the mod
