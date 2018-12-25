@@ -7,6 +7,7 @@ import threading
 import json
 import time
 import os
+import io
 
 # Configuration
 hover_text  = "DayZ Rich Presence"
@@ -14,7 +15,7 @@ client_id   = '527063225661915136'
 json_path   = os.getenv("LOCALAPPDATA") + "\DayZ\\rich_presence.json"
 
 # Actions
-def openGitHub(sysTrayIcon): 
+def open_github(sysTrayIcon): 
     webbrowser.open('https://github.com/Kreyu/dayz-rich-presence')
 def do_nothing(sysTrayIcon):
     pass
@@ -22,7 +23,7 @@ def do_nothing(sysTrayIcon):
 # Tray options
 menu_options = (
     ("DayZ Rich Presence", None, do_nothing),
-    ("GitHub", None, openGitHub),
+    ("GitHub", None, open_github),
 )
 
 # Connect to RPC
@@ -33,10 +34,20 @@ class RPCUpdateLoop(threading.Thread):
     def __init__(self): 
         threading.Thread.__init__(self)
         self.setDaemon(True)
+
+    # Check if json file exists, create if not.
+    def check_json(self, path):
+        if not os.path.isfile(path) or os.access(path, os.R_NOT_OK):
+            with io.open(path, 'w') as json_file:
+                json_file.write(json.dumps({}))
+
+    # Run the thread loop
     def run(self):
         while True:
             # If game is launched (process exists)
             if ("DayZ_x64.exe" in os.popen("tasklist").read()):
+                self.check_json(json_path)
+
                 with open(json_path) as data_file:
                     data = json.load(data_file)
 
