@@ -1,41 +1,24 @@
 #!/usr/bin/env python
 
-from misc import process_exists, get_json_data
 from pypresence import Presence
-from tray import TrayIcon
+from client.misc import process_exists, get_json_data
+from pypresence.exceptions import InvalidPipe
+from client.gui import SysTrayIcon
+from client import config
 import threading
 import random
-import json
 import time
 import sys
-import os
-import io
-
-# Configuration
-version             = "v0.1.0"
-hover_text          = "DayZ Rich Presence"
-client_id           = "527063225661915136"
-json_file           = "rich_presence.json"
-process_name        = "DayZ_x64.exe"
-
-# Paths
-application_path    = os.path.dirname(__file__)
-local_appdata_path  = os.getenv("LOCALAPPDATA")
-tray_icon_path      = os.path.join(application_path, "icon.ico")
-json_file_path      = os.path.join(local_appdata_path, "DayZ\\" + json_file)
-
-# Misc
-tooltips = [
-    "Months, not years",
-    "Would you look at that",
-    "Who's shooting in cherno?",
-    "Heyy hey, I'm friendly",
-    "Beans before friends"
-]
 
 # Connect to RPC
-RPC = Presence(client_id)
-RPC.connect()
+RPC = Presence(config.client_id)
+
+try:
+    RPC.connect()
+except InvalidPipe:
+    print("Discord not running.")
+    sys.exit()
+    pass
 
 
 class RPCUpdateLoop(threading.Thread):
@@ -46,8 +29,8 @@ class RPCUpdateLoop(threading.Thread):
 
     def run(self):
         while True:
-            if (process_exists(process_name)):
-                data = get_json_data(json_file_path)
+            if (process_exists(config.process_name)):
+                data = get_json_data(config.json_file_path)
 
                 # Default values
                 if ("status" not in data or len(data["status"]) < 1):
@@ -59,7 +42,7 @@ class RPCUpdateLoop(threading.Thread):
                 payload = {
                     "details": data["status"],
                     "large_image": "dz-logo",
-                    "large_text": random.choice(tooltips),
+                    "large_text": random.choice(config.tooltips),
                     "start": self.start_epoch,
                 }
 
@@ -72,7 +55,7 @@ class RPCUpdateLoop(threading.Thread):
             time.sleep(15)
 
 # Threading
-systray = TrayIcon(tray_icon_path, hover_text, version)
+systray = SysTrayIcon()
 rpcloop = RPCUpdateLoop()
 
 rpcloop.start()
