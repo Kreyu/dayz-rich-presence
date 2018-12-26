@@ -25,5 +25,12 @@ tooltips = [
     "Party at Balota",
     "Connection with the host has been lost",
     "Rotten kiwis everywhere",
-    
+    "Yikes",
+    "Hitreg supported",
+    "Oh boy, that wasn't a desync",
+    "*licks the battery*",
+    "I have a funny taste in my mouth",
+    "My stomach grumbled violently",
+    "Battle Royale included",
+    "That's a lot of damage",
 ]
