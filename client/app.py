@@ -1,83 +1,78 @@
 #!/usr/bin/env python
 
+from misc import process_exists, get_json_data
 from pypresence import Presence
-from infi.systray import SysTrayIcon
-import webbrowser
+from tray import TrayIcon
 import threading
+import random
 import json
 import time
+import sys
 import os
 import io
 
-if getattr(sys, 'frozen', False):
-    application_path = sys._MEIPASS
-elif __file__:
-    application_path = os.path.dirname(__file__)
-
 # Configuration
-hover_text  = "DayZ Rich Presence"
-client_id   = '527063225661915136'
-json_path   = os.getenv("LOCALAPPDATA") + "\DayZ\\rich_presence.json"
-tray_icon   = os.path.join(application_path, "icon.ico")
+version             = "v0.1.0"
+hover_text          = "DayZ Rich Presence"
+client_id           = "527063225661915136"
+json_file           = "rich_presence.json"
+process_name        = "DayZ_x64.exe"
 
-# Actions
-def open_github(sysTrayIcon): 
-    webbrowser.open('https://github.com/Kreyu/dayz-rich-presence')
-def do_nothing(sysTrayIcon):
-    pass
+# Paths
+application_path    = os.path.dirname(__file__)
+local_appdata_path  = os.getenv("LOCALAPPDATA")
+tray_icon_path      = os.path.join(application_path, "icon.ico")
+json_file_path      = os.path.join(local_appdata_path, "DayZ\\" + json_file)
 
-# Tray options
-menu_options = (
-    ("DayZ Rich Presence", None, do_nothing),
-    ("GitHub", None, open_github),
-)
+# Misc
+tooltips = [
+    "Months, not years",
+    "Would you look at that",
+    "Who's shooting in cherno?",
+    "Heyy hey, I'm friendly",
+    "Beans before friends"
+]
 
 # Connect to RPC
 RPC = Presence(client_id)
 RPC.connect()
 
+
 class RPCUpdateLoop(threading.Thread):
-    def __init__(self): 
+    def __init__(self):
         threading.Thread.__init__(self)
         self.setDaemon(True)
+        self.start_epoch = int(time.time())
 
-    # Check if json file exists, create if not.
-    def check_json(self, path):
-        if not os.path.isfile(path) or not os.access(path, os.R_OK):
-            with io.open(path, 'w') as json_file:
-                json_file.write(json.dumps({}))
-
-    # Run the thread loop
     def run(self):
         while True:
-            # If game is launched (process exists)
-            if ("DayZ_x64.exe" in os.popen("tasklist").read()):
-                self.check_json(json_path)
-
-                with open(json_path) as data_file:
-                    data = json.load(data_file)
+            if (process_exists(process_name)):
+                data = get_json_data(json_file_path)
 
                 # Default values
                 if ("status" not in data or len(data["status"]) < 1):
                     data["status"] = "In main menu"
-                
+
                 # Truncate strings
                 data["status"] = data["status"][:128]
-                
-                request = RPC.update(details=data["status"], large_image="dz-logo")
+
+                payload = {
+                    "details": data["status"],
+                    "large_image": "dz-logo",
+                    "large_text": random.choice(tooltips),
+                    "start": self.start_epoch,
+                }
+
+                request = RPC.update(**payload)
                 print(request)
             else:
                 RPC.clear()
+                self.start_epoch = int(time.time())
                 print("DayZ process not running")
             time.sleep(15)
 
-# Closing the application
-def on_quit_callback(systray):
-    sys.exit()
-    systray.shutdown()
-
 # Threading
-systray = SysTrayIcon(tray_icon, hover_text, menu_options, default_menu_index=1, on_quit=on_quit_callback)
+systray = TrayIcon(tray_icon_path, hover_text, version)
 rpcloop = RPCUpdateLoop()
 
 rpcloop.start()
