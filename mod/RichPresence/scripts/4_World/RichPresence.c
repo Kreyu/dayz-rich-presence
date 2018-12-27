@@ -1,43 +1,39 @@
 class RichPresence
 {
     protected string                    m_FileLocation = "$profile:rich_presence.json";
+    protected int                       m_Status = RichPresenceStatus.NONE;
     protected ref map<string, string>   m_PresenceData;
-    protected ref Timer                 m_Timer;
 
     void RichPresence()
     {
         m_PresenceData = Load();
     }
 
-    void Initialize()
-    {
-        if (!m_Timer) {
-            m_Timer = new Timer();
-            m_Timer.Run(15, this, "Update", NULL, true);
-
-            Print("<RichPresence> Initialized");
-        }
-    }
-
-    void Update()
-    {
-        Save();
-    }
-
     void Close()
     {
-        m_Timer.Stop();
-        SetStatus("");
-        Save();
+        SetStatus(RichPresenceStatus.NONE);
         
         Print("<RichPresence> Successfully closed");
     }
 
-    void SetStatus(string status)
+    void SetStatus(int status)
     {
-        m_PresenceData.Set("status", status);
+        string description = GetRichPresenceStatus().GetDescription(status);
 
-        Print("<RichPresence> New status: " + status);
+        if (status == RichPresenceStatus.IN_GAME) {
+            string playerName = "";
+            GetGame().GetPlayerName(playerName);
+
+            if (playerName.Length() > 0) {
+                description = description + " | " + playerName;
+            }
+        }
+
+        m_Status = status;
+        m_PresenceData.Set("status", description);
+        Save();
+
+        Print("<RichPresence> New status: " + status + " (" + description + ")");
     }
 
     map<string, string> Load()

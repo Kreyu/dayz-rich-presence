@@ -1,12 +1,5 @@
 modded class MissionBase
 {
-    void MissionBase()
-    {
-        if (IsEligible()) {
-            GetRichPresence().Initialize();
-        }
-    }
-
     void ~MissionBase()
     {
         if (IsEligible()) {
@@ -27,7 +20,7 @@ modded class MissionGameplay
         super.OnInit();
 
         if (IsEligible()) {
-            GetRichPresence().SetStatus("In game");
+            GetRichPresence().SetStatus(RichPresenceStatus.IN_GAME);
         }
     }
 }
@@ -39,7 +32,7 @@ modded class MissionMainMenu
         super.OnInit();
 
         if (IsEligible()) {
-            GetRichPresence().SetStatus("In main menu");
+            GetRichPresence().SetStatus(RichPresenceStatus.IN_MENU);
         }
 	}
 }
