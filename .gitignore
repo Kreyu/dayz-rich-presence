@@ -1,7 +1,6 @@
 .vscode/
 .history/
-client/__pycache__/
-client/client/__pycache__/
+**/__pycache__
 
 build/
 dist/

@@ -18,6 +18,7 @@ Due to modding limitations, it is required to run the client alongside the mod.
 - [DayZ Tools](https://store.steampowered.com/app/830640/DayZ_Tools/)
 - [Python 3](https://www.python.org/downloads/)
 - [PyInstaller](https://www.pyinstaller.org/)
+- [pypresence](https://github.com/qwertyquerty/pypresence/)
 
 If you wish to run the client locally from the command line:
 - [pywin32](https://pypi.org/project/pywin32/)
@@ -49,17 +50,10 @@ Navigate to the client folder
 cd client
 ```
 
-Run build script
-
-> **Note**: Before running the build script, ensure you are inside the *client* folder.
+> **Note**: Before running the command below, ensure you are inside the *client* folder.
 
 ```bash
-build.bat
-```
-
-If you want to run the **pyinstaller** without build script:
-```bash
-pyinstaller --windowed --onefile --add-data icon.ico;. --hidden-import pkg_resources --hidden-import infi.systray --name DZRichPresence --icon=./icon.ico app.py
+pyinstaller --windowed --onefile --add-data 'icon.ico;.' --name DZRichPresence --icon=./icon.ico app.py
 ```
 
 The executable should be created in `dist/` folder.

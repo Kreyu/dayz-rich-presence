@@ -1,4 +1,4 @@
-from infi.systray import SysTrayIcon as BaseSysTrayIcon
+from lib.infi_systray.SysTrayIcon import SysTrayIcon as BaseSysTrayIcon
 from client import config
 import webbrowser
 import sys
