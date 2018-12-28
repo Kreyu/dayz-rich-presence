@@ -1,9 +1,17 @@
+import io
 import json
 import os
-import io
+
+import psutil
+
 
 def process_exists(name):
-    return name in os.popen("tasklist").read()
+    for proc in psutil.process_iter(): 
+        process = psutil.Process(proc.pid)
+        pname = process.name()
+        if pname == name: 
+            return True
+    return False
 
 def get_json_data(path):
     if not os.path.isfile(path) or not os.access(path, os.R_OK):

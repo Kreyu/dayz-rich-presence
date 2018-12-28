@@ -1,19 +1,33 @@
 import os
+import sys
 
 # Configuration
+
 version             = "v0.1.0"
-hover_text          = "DayZ Rich Presence"
+app_name            = "DayZ Rich Presence"
 client_id           = "527063225661915136"
 json_file           = "rich_presence.json"
-process_name        = "DayZ_x64.exe"
+log_file_path       = "rich_presence_client.log"
+game_process        = "DayZ_x64.exe"
+discord_process     = "Discord.exe"
+client_process      = "DZRichPresence.exe"
+tick_delay          = 15
 
 # Paths
-application_path    = os.path.dirname(__file__)
+
+if hasattr(sys, '_MEIPASS'):
+    application_path = os.path.join(sys._MEIPASS)
+else:
+    application_path = os.path.dirname(__file__)
+
 local_appdata_path  = os.getenv("LOCALAPPDATA")
-tray_icon_path      = os.path.join(application_path, "..\\icon.ico")
-json_file_path      = os.path.join(local_appdata_path, "DayZ\\" + json_file)
+game_appdata_path   = os.path.join(local_appdata_path, "DayZ")
+app_icon_path       = os.path.join(application_path, "icon.ico")
+json_file_path      = os.path.join(game_appdata_path,  json_file)
+log_file_path       = os.path.join(game_appdata_path, log_file_path)
 
 # Misc
+
 tooltips = [
     "Months, not years",
     "Would you look at that",

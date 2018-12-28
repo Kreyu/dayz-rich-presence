@@ -13,6 +13,11 @@ Due to modding limitations, it is required to run the client alongside the mod.
 **Mod** is used to store the present data into `%localappdata%/DayZ/rich_presence.json` file.  
 **Client** is used to send the presence data to Discord, using the [pypresence](https://github.com/qwertyquerty/pypresence) wrapper.
 
+# Download
+
+To download the current version, navigate to the [releases page.](https://github.com/Kreyu/dayz-rich-presence/releases)  
+All releases consists of two .zip archives- one for the client, one for the packed and signed modification.
+
 # Prerequisites
 
 - [DayZ Tools](https://store.steampowered.com/app/830640/DayZ_Tools/)
@@ -28,37 +33,9 @@ After installing the **pywin32**, navigate to your **Python PATH** directory, an
 python Scripts/pywin32_postinstall.py -install
 ```
 
-# Installation
+# Mod
 
-Clone the repository
-
-```bash
-git clone https://github.com/Kreyu/dayz-rich-presence.git
-```
-
-Navigate to the cloned repository
-
-```bash
-cd dayz-rich-presence
-```
-
-## Creating the installer
-
-Navigate to the client folder
-
-```bash
-cd client
-```
-
-> **Note**: Before running the command below, ensure you are inside the *client* folder.
-
-```bash
-pyinstaller --windowed --onefile --add-data 'icon.ico;.' --name DZRichPresence --icon=./icon.ico app.py
-```
-
-The executable should be created in `dist/` folder.
-
-## Packing the mod
+**Packing the mod**
 
 Open **DayZ Tools** and launch the **Addon builder** tool, setting it up as follows:
 
@@ -71,13 +48,30 @@ Open **DayZ Tools** and launch the **Addon builder** tool, setting it up as foll
 - Addon prefix:  
   `RichPresence`
 
-# Running the client from the command line
+# Client
 
-Simply navigate to the repository directory, and run:
+**Running the client from the command line**
+
+Run the main client script
+
+```bash
+python client/app.py
 ```
-cd client & python app.py
+
+The application icon should be visible in the tray, and all the debug prints should be visible in the console.  
+To exit the application, right click on the tray icon and select **Quit** option.
+
+**Building the executable**
+
+Run the build script
+
+```bash
+python client/build.py
 ```
 
-> **Note**: ensure you are launching the application from the *client directory*, otherwise the icon in the tray will be displayed as the default placeholder.
+The executable should be created in `client/dist/` folder.
 
-The application icon should be visible in the tray, and all the debug prints should be visible in the console. To exit the application, right click on the tray icon and select **Quit** option.
+# Todo
+
+- Display server name / IP address
+- Stop being bad at writing readme
