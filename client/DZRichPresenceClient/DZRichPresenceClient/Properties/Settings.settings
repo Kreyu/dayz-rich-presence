@@ -47,7 +47,10 @@
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
     <Setting Name="Version" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">0.1.0</Value>
+      <Value Profile="(Default)">0.1.1</Value>
+    </Setting>
+    <Setting Name="WorkshopUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://steamcommunity.com/sharedfiles/filedetails/?id=1605419390</Value>
     </Setting>
   </Settings>
 </SettingsFile>

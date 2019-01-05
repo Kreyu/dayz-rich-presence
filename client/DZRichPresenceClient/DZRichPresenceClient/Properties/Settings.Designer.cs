@@ -117,10 +117,22 @@ namespace DZRichPresenceClient.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.1.0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.1.1")]
         public string Version {
             get {
                 return ((string)(this["Version"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://steamcommunity.com/sharedfiles/filedetails/?id=1605419390")]
+        public string WorkshopUrl {
+            get {
+                return ((string)(this["WorkshopUrl"]));
+            }
+            set {
+                this["WorkshopUrl"] = value;
             }
         }
     }
