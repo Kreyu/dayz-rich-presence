@@ -16,9 +16,14 @@ All releases consists of two .zip archives- one for the client, one for the pack
 
 # Client
 
-**Building from source**
+**Running locally from source**
 
-- Todo
+- Download the latest Discord RPC release from [here](https://github.com/discordapp/discord-rpc/releases)
+- Extract the archive
+- Copy the `discord-rpc/win32-dynamic/bin/discord-rpc.dll` file
+- Paste the copied .dll file into the `DZRichPresenceClient/bin/Debug` folder
+- Open the solution in the _Microsoft Visual Studio_
+- Run the program
 
 # Mod
 
