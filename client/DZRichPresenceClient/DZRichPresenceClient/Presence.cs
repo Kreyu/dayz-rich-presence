@@ -155,7 +155,7 @@ namespace DZRichPresenceClient
         {
             return new PresenceData()
             {
-                status = ""
+                status = string.Empty
             };
         }
     }

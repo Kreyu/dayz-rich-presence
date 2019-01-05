@@ -52,6 +52,42 @@ namespace DZRichPresenceClient.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/Kreyu/dayz-rich-presence")]
+        public string RepositoryUrl {
+            get {
+                return ((string)(this["RepositoryUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("dayz-rich-presence")]
+        public string RepositoryId {
+            get {
+                return ((string)(this["RepositoryId"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Kreyu")]
+        public string RepositoryOwner {
+            get {
+                return ((string)(this["RepositoryOwner"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/Kreyu/dayz-rich-presence/releases")]
+        public string ReleasesUrl {
+            get {
+                return ((string)(this["ReleasesUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
 <ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
   <string>Months, not years</string>
@@ -76,6 +112,15 @@ namespace DZRichPresenceClient.Properties {
         public global::System.Collections.Specialized.StringCollection LargeImageTexts {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["LargeImageTexts"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.1.0")]
+        public string Version {
+            get {
+                return ((string)(this["Version"]));
             }
         }
     }

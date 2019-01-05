@@ -11,6 +11,18 @@
     <Setting Name="PresenceDataFile" Type="System.String" Scope="Application">
       <Value Profile="(Default)">rich_presence.json</Value>
     </Setting>
+    <Setting Name="RepositoryUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://github.com/Kreyu/dayz-rich-presence</Value>
+    </Setting>
+    <Setting Name="RepositoryId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">dayz-rich-presence</Value>
+    </Setting>
+    <Setting Name="RepositoryOwner" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Kreyu</Value>
+    </Setting>
+    <Setting Name="ReleasesUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://github.com/Kreyu/dayz-rich-presence/releases</Value>
+    </Setting>
     <Setting Name="LargeImageTexts" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
@@ -33,6 +45,9 @@
   &lt;string&gt;Battle Royale included&lt;/string&gt;
   &lt;string&gt;That's a lot of damage&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="Version" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">0.1.0</Value>
     </Setting>
   </Settings>
 </SettingsFile>
