@@ -16,8 +16,6 @@ All releases consists of two .zip archives- one for the client, one for the pack
 
 # Client
 
-> The release v0.1.0 contains deprecated client written entirely in Python, therefore this section only concerns the later releases.
-
 **Building from source**
 
 - Todo
@@ -41,3 +39,4 @@ Open **DayZ Tools** and launch the **Addon builder** tool, setting it up as foll
 
 - Display server name / IP address
 - Stop being bad at writing readme
+- Make it work without a client
