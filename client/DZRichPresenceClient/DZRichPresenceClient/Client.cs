@@ -10,7 +10,7 @@ namespace DZRichPresenceClient
         private NotifyIcon trayIcon;
         private readonly ContextMenu trayMenu;
         private string applicationName;
-
+        
         public Client()
         {
             applicationName = Properties.Settings.Default.ApplicationName;
@@ -23,6 +23,12 @@ namespace DZRichPresenceClient
             Presence.Start();
         }
 
+        /// <summary>
+        /// Creates the tray menu with configured items.
+        /// </summary>
+        /// <returns>
+        /// The configured, ready to use tray menu.
+        /// </returns>
         private ContextMenu CreateTrayMenu()
         {
             ContextMenu trayMenu = new ContextMenu();
@@ -41,6 +47,12 @@ namespace DZRichPresenceClient
             return trayMenu;
         }
 
+        /// <summary>
+        /// Creates the tray icon with given tray menu.
+        /// </summary>
+        /// <returns>
+        /// The tray icon with given tray menu.
+        /// </returns>
         private NotifyIcon CreateTrayIcon(ContextMenu trayMenu)
         {
             return new NotifyIcon
@@ -53,13 +65,19 @@ namespace DZRichPresenceClient
             };
         }
 
-        private void ShowBalloon(string body)
+        /// <summary>
+        /// Creates and shows the balloon tip with given body and optional timeout.
+        /// </summary>
+        private void ShowBalloon(string body, int timeout = 3000)
         {
             trayIcon.BalloonTipTitle = applicationName;
             trayIcon.BalloonTipText = body;
-            trayIcon.ShowBalloonTip(3000);
+            trayIcon.ShowBalloonTip(timeout);
         }
 
+        /// <summary>
+        /// Opens the project's GitHub repository in the browser.
+        /// </summary>
         private void OpenGitHub(object sender, EventArgs e)
         {
             ProcessStartInfo sInfo = new ProcessStartInfo("https://github.com/Kreyu/dayz-rich-presence");

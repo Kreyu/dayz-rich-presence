@@ -9,8 +9,14 @@ namespace DZRichPresenceClient
 {
     class Presence
     {
+        /// <summary>
+        /// Determines if the Discord RPC update process loop should be running. 
+        /// </summary>
         private static bool Continue = true;
 
+        /// <summary>
+        /// Starts the Discord RPC update process.
+        /// </summary>
         public static void Start()
         {
             Random random = new Random();
@@ -52,36 +58,72 @@ namespace DZRichPresenceClient
             });
         }
 
+        /// <summary>
+        /// Stops the Discord RPC update process.
+        /// </summary>
         public static void Stop()
         {
             DiscordRpc.Shutdown();
         }
 
+        /// <summary>
+        /// Reads json file and deserializes to the presence data.
+        /// Applies a fallback if file is not found or found invalid.
+        /// </summary>
+        /// <returns>
+        /// Presence data from the json file.
+        /// </returns>
         private static PresenceData GetPresenceData()
         {
             string localAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string jsonPath = Path.Combine(localAppDataPath, "DayZ", "rich_presence.json");
+            string jsonPath = Path.Combine(localAppDataPath, "DayZ", Properties.Settings.Default.PresenceDataFile);
 
-            using (StreamReader r = new StreamReader(jsonPath))
-            {
-                string json = r.ReadToEnd();
-                PresenceData items = JsonConvert.DeserializeObject<PresenceData>(json);
+            PresenceData presenceData = PresenceData.GetDefaultData();
 
-                return items;
+            try {
+                using (StreamReader reader = new StreamReader(jsonPath))
+                {
+                    string json = reader.ReadToEnd();
+
+                    presenceData = JsonConvert.DeserializeObject<PresenceData>(json);
+                }
             }
+            catch (Exception exception)
+            {
+                if (exception is FileNotFoundException || exception is JsonReaderException)
+                {
+                    presenceData = PresenceData.GetDefaultData();
+
+                    using (TextWriter writer = new StreamWriter(jsonPath, false))
+                    {
+                        writer.Write(JsonConvert.SerializeObject(presenceData));
+                    }
+                }
+            }
+
+            return presenceData;
         }
 
+        /// <summary>
+        /// Callback to run when Discord RPC is ready.
+        /// </summary>
         private static void ReadyCallback()
         {
             Console.WriteLine("Discord::Ready()");
         }
 
+        /// <summary>
+        /// Callback to run when Discord RPC got disconnected.
+        /// </summary>
         private static void DisconnectedCallback(int errorCode, string message)
         {
             Console.WriteLine("Discord::Disconnect({0}, {1})", errorCode, message);
             Continue = false;
         }
 
+        /// <summary>
+        /// Callback to run when Discord RPC got error.
+        /// </summary>
         private static void ErrorCallback(int errorCode, string message)
         {
             Console.WriteLine("Discord::Error({0}, {1})", errorCode, message);
@@ -92,9 +134,29 @@ namespace DZRichPresenceClient
     {
         public string status;
 
+        /// <summary>
+        /// Determines if current instance data is valid.
+        /// </summary>
+        /// <returns>
+        /// A validation status.
+        /// </returns>
         public bool IsValid()
         {
             return status.Length > 0 && status.Length <= 128;
+        }
+
+        /// <summary>
+        /// Returns new instance of self with default presence data.
+        /// </summary>
+        /// <returns>
+        /// New instance of self with default data.
+        /// </returns>
+        public static PresenceData GetDefaultData()
+        {
+            return new PresenceData()
+            {
+                status = ""
+            };
         }
     }
 }
