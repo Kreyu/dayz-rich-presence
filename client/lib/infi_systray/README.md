@@ -1,1 +1,0 @@
-Source: https://github.com/Infinidat/infi.systray
