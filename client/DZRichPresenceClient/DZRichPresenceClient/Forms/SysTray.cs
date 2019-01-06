@@ -46,11 +46,6 @@ namespace DZRichPresenceClient
             };
         }
 
-        private void CheckForUpdates(object sender = null, EventArgs e = null)
-        {
-            Program.CheckForUpdates();
-        }
-
         private void ShowBalloon(string body, int timeout = 3000)
         {
             trayIcon.BalloonTipTitle = Properties.Settings.Default.ApplicationName;
@@ -67,6 +62,11 @@ namespace DZRichPresenceClient
         private void OpenGitHub(object sender, EventArgs e)
         {
             Program.OpenBrowser(Properties.Settings.Default.RepositoryUrl);
+        }
+
+        private void CheckForUpdates(object sender = null, EventArgs e = null)
+        {
+            Program.CheckForUpdates();
         }
 
         protected override void OnLoad(EventArgs e)

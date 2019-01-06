@@ -4,12 +4,15 @@ using DiscordRpcNet;
 using System.Collections.Specialized;
 using Newtonsoft.Json;
 using System.IO;
+using System.Diagnostics;
 
 namespace DZRichPresenceClient
 {
     static class Presence
     {
         private static bool Continue = true;
+        private static bool Initialized = false;
+        private static int StartTimestamp;
 
         public static void Start()
         {
@@ -26,35 +29,58 @@ namespace DZRichPresenceClient
 
             Task.Run((Action) delegate
             {
-                DiscordRpc.Initialize(Properties.Settings.Default.ApplicationId, ref Callbacks, true, null);
-
-                var Status = new DiscordRpc.RichPresence
-                {
-                    largeImageKey = "dz-logo",
-                    startTimestamp = (int) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds,
-                };
-
                 while (Continue)
                 {
-                    PresenceData presenceData = GetPresenceData();
-
-                    if (presenceData.IsValid())
+                    if (IsGameRunning())
                     {
-                        Status.details = presenceData.status;
-                        Status.largeImageText = largeImageTexts[random.Next(largeImageTexts.Count)];
+                        if (!Initialized) Initialize();
 
-                        DiscordRpc.UpdatePresence(ref Status);
+                        PresenceData presenceData = GetPresenceData();
+
+                        if (presenceData.IsValid())
+                        {
+                            var Status = new DiscordRpc.RichPresence
+                            {
+                                largeImageKey = "dz-logo",
+                                details = presenceData.status,
+                                largeImageText = largeImageTexts[random.Next(largeImageTexts.Count)],
+                                startTimestamp = StartTimestamp
+                            };
+
+                            DiscordRpc.UpdatePresence(ref Status);
+                        }
+
+                        try { 
+                            DiscordRpc.RunCallbacks();
+                        } catch (Exception) {}
                     }
+                    else if (Initialized) Stop();
 
-                    DiscordRpc.RunCallbacks();
                     System.Threading.Thread.Sleep(15000);
                 }
             });
         }
-        
+
         public static void Stop()
         {
             DiscordRpc.Shutdown();
+
+            Initialized = false;
+        }
+
+        private static void Initialize()
+        {
+            var Callbacks = new DiscordRpc.EventHandlers
+            {
+                readyCallback = ReadyCallback,
+                disconnectedCallback = DisconnectedCallback,
+                errorCallback = ErrorCallback
+            };
+
+            DiscordRpc.Initialize(Properties.Settings.Default.ApplicationId, ref Callbacks, true, null);
+
+            StartTimestamp = (int) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds;
+            Initialized = true;
         }
 
         private static PresenceData GetPresenceData()
@@ -86,6 +112,11 @@ namespace DZRichPresenceClient
             }
 
             return presenceData;
+        }
+
+        private static bool IsGameRunning()
+        {
+            return Process.GetProcessesByName("DayZ_x64").Length > 0;
         }
 
         private static void ReadyCallback()
