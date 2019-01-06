@@ -135,5 +135,17 @@ namespace DZRichPresenceClient.Properties {
                 this["WorkshopUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("rich_presence.log")]
+        public string LogFile {
+            get {
+                return ((string)(this["LogFile"]));
+            }
+            set {
+                this["LogFile"] = value;
+            }
+        }
     }
 }

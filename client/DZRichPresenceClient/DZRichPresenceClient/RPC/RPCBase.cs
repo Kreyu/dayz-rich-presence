@@ -6,9 +6,9 @@
 // https://github.com/discordapp/discord-rpc
 //
 
-namespace DiscordRpcNet
+namespace DZRichPresenceClient.RPC
 {
-    public class DiscordRpc
+    public class RPCBase
     {
         private const string DiscordDll = "discord-rpc.dll";
 

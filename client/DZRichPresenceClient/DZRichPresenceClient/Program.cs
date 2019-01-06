@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DZRichPresenceClient.Forms;
+using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -93,9 +94,6 @@ namespace DZRichPresenceClient
             }
         }
 
-        /// <summary>
-        /// Opens the given url in the browser.
-        /// </summary>
         public static void OpenBrowser(string url)
         {
             ProcessStartInfo sInfo = new ProcessStartInfo(url);

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using DZRichPresenceClient.RPC;
+using System;
 using System.Windows.Forms;
 
-namespace DZRichPresenceClient
+namespace DZRichPresenceClient.Forms
 {
-    class SysTray : Form
+    public class SysTray : Form
     {
         private NotifyIcon trayIcon;
         private readonly ContextMenu trayMenu;

@@ -52,5 +52,8 @@
     <Setting Name="WorkshopUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://steamcommunity.com/sharedfiles/filedetails/?id=1605419390</Value>
     </Setting>
+    <Setting Name="LogFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">rich_presence.log</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

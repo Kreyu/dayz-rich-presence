@@ -1,4 +1,4 @@
-﻿namespace DZRichPresenceClient
+﻿namespace DZRichPresenceClient.RPC
 {
     public class PresenceData
     {

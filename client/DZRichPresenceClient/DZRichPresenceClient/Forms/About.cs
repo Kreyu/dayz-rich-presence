@@ -2,13 +2,13 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace DZRichPresenceClient
+namespace DZRichPresenceClient.Forms
 {
-    class About : Form
+    public class About : Form
     {
         private PictureBox Logo;
-        private System.Windows.Forms.Label TitleLabel;
-        private System.Windows.Forms.Label Description;
+        private Label TitleLabel;
+        private Label Description;
         private LinkLabel RepositoryLink;
         private LinkLabel WorkshopLink;
         private Button CloseButton;
