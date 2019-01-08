@@ -1,4 +1,5 @@
-﻿using DZRichPresenceClient.Forms;
+﻿using DZRichPresenceClient.Data;
+using DZRichPresenceClient.Forms;
 using System;
 using System.Diagnostics;
 using System.Reflection;
@@ -14,7 +15,7 @@ namespace DZRichPresenceClient
         {
             if (IsAlreadyRunning())
             {
-                MessageBox.Show("Client already running!", Properties.Settings.Default.ApplicationName);
+                MessageBox.Show("Client already running!", Config.ApplicationName);
                 return;
             }
 
@@ -25,7 +26,7 @@ namespace DZRichPresenceClient
             Application.Run(new SysTray());
         }
 
-        public static bool IsAlreadyRunning()
+        private static bool IsAlreadyRunning()
         {
             Process current = Process.GetCurrentProcess();
             Process[] processes = Process.GetProcessesByName(current.ProcessName);
@@ -46,24 +47,20 @@ namespace DZRichPresenceClient
 
         public static void CheckForUpdates(bool skipSameVersionMessage = false)
         {
-            string applicationName = Properties.Settings.Default.ApplicationName;
-            string repositoryId = Properties.Settings.Default.RepositoryId;
-            string repositoryOwner = Properties.Settings.Default.RepositoryOwner;
-
-            var client = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(repositoryId));
+            var client = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(Config.RepositoryId));
             dynamic releases = null;
 
             try
             {
-                releases = client.Repository.Release.GetAll(repositoryOwner, repositoryId).Result;
+                releases = client.Repository.Release.GetAll(Config.RepositoryOwner, Config.RepositoryId).Result;
             }
             catch (Exception)
             {
-                var dialogResult = MessageBox.Show("Couldn't fetch latest release info. Do you want to check manually?", applicationName, MessageBoxButtons.YesNo);
+                var dialogResult = MessageBox.Show("Couldn't fetch latest release info. Do you want to check manually?", Config.ApplicationName, MessageBoxButtons.YesNo);
 
                 if (dialogResult == DialogResult.Yes)
                 {
-                    OpenBrowser(Properties.Settings.Default.ReleasesUrl);
+                    OpenBrowser(Config.RepositoryReleasesUrl);
                 }
 
                 return;
@@ -78,11 +75,11 @@ namespace DZRichPresenceClient
 
             if (versionDifference > 0)
             {
-                var dialogResult = MessageBox.Show("New version available. Do you want to open the releases page?", applicationName, MessageBoxButtons.YesNo);
+                var dialogResult = MessageBox.Show("New version available. Do you want to open the releases page?", Config.ApplicationName, MessageBoxButtons.YesNo);
 
                 if (dialogResult == DialogResult.Yes)
                 {
-                    OpenBrowser(Properties.Settings.Default.ReleasesUrl);
+                    OpenBrowser(Config.RepositoryReleasesUrl);
                 }
 
                 return;
@@ -90,7 +87,7 @@ namespace DZRichPresenceClient
 
             if (!skipSameVersionMessage)
             {
-                MessageBox.Show("You are running the latest version.", applicationName);
+                MessageBox.Show("You are running the latest version.", Config.ApplicationName);
             }
         }
 

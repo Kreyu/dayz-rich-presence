@@ -1,4 +1,5 @@
-﻿using DZRichPresenceClient.RPC;
+﻿using DZRichPresenceClient.Data;
+using DZRichPresenceClient.RPC;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
@@ -10,22 +11,22 @@ namespace DZRichPresenceClient.Misc
     {
         public static bool IsRunning()
         {
-            return Process.GetProcessesByName("DayZ_x64").Length > 0;
+            return Process.GetProcessesByName(Config.GameProcessName).Length > 0;
         }
 
         public static string GetDataDirectory()
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DayZ");
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Config.GameDataFolderName);
         }
 
         public static string GetLogFilePath()
         {
-            return Path.Combine(GetDataDirectory(), Properties.Settings.Default.LogFile);
+            return Path.Combine(GetDataDirectory(), Config.ErrorLogFile);
         }
 
         public static string GetPresenceFilePath()
         {
-            return Path.Combine(GetDataDirectory(), Properties.Settings.Default.PresenceDataFile);
+            return Path.Combine(GetDataDirectory(), Config.PresenceDataFile);
         }
 
         public static PresenceData GetPresenceData()

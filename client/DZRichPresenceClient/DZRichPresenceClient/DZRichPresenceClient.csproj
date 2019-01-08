@@ -71,6 +71,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Storage.cs" />
+    <Compile Include="Data\Config.cs" />
     <Compile Include="RPC\RPCBase.cs" />
     <Compile Include="RPC\PresenceData.cs" />
     <Compile Include="Forms\SysTray.cs">
@@ -81,7 +83,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="RPC\RPC.cs" />
-    <Compile Include="Misc\ArrayExtensions.cs" />
     <Compile Include="Misc\Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

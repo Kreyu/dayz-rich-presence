@@ -1,4 +1,5 @@
-﻿using DZRichPresenceClient.Misc;
+﻿using DZRichPresenceClient.Data;
+using DZRichPresenceClient.Misc;
 using System;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace DZRichPresenceClient.RPC
                 while (Continue)
                 {
                     UpdateTick();
-                    System.Threading.Thread.Sleep(15000);
+                    System.Threading.Thread.Sleep(Config.TickDelay);
                 }
             });
         }
@@ -26,11 +27,7 @@ namespace DZRichPresenceClient.RPC
         {
             if (Initialized)
             {
-                try
-                {
-                    RPC.Shutdown();
-                }
-                catch (Exception) { }
+                RPC.Shutdown();
             }
 
             Initialized = false;
@@ -51,7 +48,7 @@ namespace DZRichPresenceClient.RPC
                     disconnectedCallback = DisconnectedCallback,
                 };
 
-                RPC.Initialize(Properties.Settings.Default.ApplicationId, ref Callbacks, true, null);
+                RPC.Initialize(Config.ApplicationId, ref Callbacks, true, null);
 
                 StartTimestamp = (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds;
                 Initialized = true;
@@ -65,7 +62,7 @@ namespace DZRichPresenceClient.RPC
                 {
                     largeImageKey = "dz-logo",
                     details = presenceData.status,
-                    largeImageText = Properties.Settings.Default.LargeImageTexts.RandomElement(),
+                    largeImageText = Storage.LargeImageTexts.GetRandom().ToString(),
                     startTimestamp = StartTimestamp
                 };
 

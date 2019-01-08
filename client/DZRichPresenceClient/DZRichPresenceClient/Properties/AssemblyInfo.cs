@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("DayZ Rich Presence")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A client for the game mod, integrating the Discord RPC feature.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("DayZ Rich Presence")]

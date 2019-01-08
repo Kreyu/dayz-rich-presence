@@ -1,4 +1,5 @@
-﻿using DZRichPresenceClient.RPC;
+﻿using DZRichPresenceClient.Data;
+using DZRichPresenceClient.RPC;
 using System;
 using System.Windows.Forms;
 
@@ -25,7 +26,7 @@ namespace DZRichPresenceClient.Forms
 
             string separator = "-";
 
-            trayMenu.MenuItems.Add(Properties.Settings.Default.ApplicationName, ShowAbout);
+            trayMenu.MenuItems.Add(Config.ApplicationName, ShowAbout);
             trayMenu.MenuItems.Add(separator);
             trayMenu.MenuItems.Add("GitHub", OpenGitHub);
             trayMenu.MenuItems.Add("Check for updates", CheckForUpdates);
@@ -39,7 +40,7 @@ namespace DZRichPresenceClient.Forms
         {
             return new NotifyIcon
             {
-                Text = Properties.Settings.Default.ApplicationName,
+                Text = Config.ApplicationName,
                 Icon = Properties.Resources.icon,
 
                 ContextMenu = trayMenu,
@@ -49,7 +50,7 @@ namespace DZRichPresenceClient.Forms
 
         private void ShowBalloon(string body, int timeout = 3000)
         {
-            trayIcon.BalloonTipTitle = Properties.Settings.Default.ApplicationName;
+            trayIcon.BalloonTipTitle = Config.ApplicationName;
             trayIcon.BalloonTipText = body;
             trayIcon.ShowBalloonTip(timeout);
         }
@@ -62,7 +63,7 @@ namespace DZRichPresenceClient.Forms
 
         private void OpenGitHub(object sender, EventArgs e)
         {
-            Program.OpenBrowser(Properties.Settings.Default.RepositoryUrl);
+            Program.OpenBrowser(Config.RepositoryUrl);
         }
 
         private void CheckForUpdates(object sender = null, EventArgs e = null)

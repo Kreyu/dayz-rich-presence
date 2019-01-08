@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DZRichPresenceClient.Data;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -52,7 +53,7 @@ namespace DZRichPresenceClient.Forms
             this.TitleLabel.Name = "TitleLabel";
             this.TitleLabel.Size = new System.Drawing.Size(167, 23);
             this.TitleLabel.TabIndex = 1;
-            this.TitleLabel.Text = global::DZRichPresenceClient.Properties.Settings.Default.ApplicationName;
+            this.TitleLabel.Text = "DayZ Rich Presence";
             this.TitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Description
@@ -62,7 +63,7 @@ namespace DZRichPresenceClient.Forms
             this.Description.Name = "Description";
             this.Description.Size = new System.Drawing.Size(170, 14);
             this.Description.TabIndex = 2;
-            this.Description.Text = global::DZRichPresenceClient.Properties.Settings.Default.Version;
+            this.Description.Text = "0.1.1";
             this.Description.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // RepositoryLink
@@ -111,7 +112,8 @@ namespace DZRichPresenceClient.Forms
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "About";
-            this.Text = global::DZRichPresenceClient.Properties.Settings.Default.ApplicationName;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "DayZ Rich Presence";
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).EndInit();
             this.ResumeLayout(false);
 
@@ -124,12 +126,12 @@ namespace DZRichPresenceClient.Forms
 
         private void RepositoryLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Program.OpenBrowser(Properties.Settings.Default.RepositoryUrl);
+            Program.OpenBrowser(Config.RepositoryUrl);
         }
 
         private void WorkshopLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Program.OpenBrowser(Properties.Settings.Default.WorkshopUrl);
+            Program.OpenBrowser(Config.ModWorkshopUrl);
         }
     }
 }
