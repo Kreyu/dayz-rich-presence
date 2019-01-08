@@ -1,6 +1,8 @@
 ﻿using DZRichPresenceClient.Data;
 using DZRichPresenceClient.RPC;
 using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace DZRichPresenceClient.Forms
@@ -38,7 +40,7 @@ namespace DZRichPresenceClient.Forms
 
         private NotifyIcon CreateTrayIcon(ContextMenu trayMenu)
         {
-            return new NotifyIcon
+            NotifyIcon trayIcon = new NotifyIcon
             {
                 Text = Config.ApplicationName,
                 Icon = Properties.Resources.icon,
@@ -46,6 +48,10 @@ namespace DZRichPresenceClient.Forms
                 ContextMenu = trayMenu,
                 Visible = true
             };
+
+            trayIcon.DoubleClick += ShowAbout;
+
+            return trayIcon;
         }
 
         private void ShowBalloon(string body, int timeout = 3000)
@@ -57,7 +63,14 @@ namespace DZRichPresenceClient.Forms
 
         private void ShowAbout(object sender, EventArgs e)
         {
-            About about = new About();
+            Form about = Application.OpenForms["About"];
+
+            if (about != null)
+            {
+                about.Close();
+            }
+
+            about = new About();
             about.Show();
         }
 
