@@ -1,5 +1,6 @@
 ﻿using DZRichPresenceClient.Data;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -12,6 +13,7 @@ namespace DZRichPresenceClient.Forms
         private Label Description;
         private LinkLabel RepositoryLink;
         private LinkLabel WorkshopLink;
+        private CheckBox NotificationSettingCheckbox;
         private Button CloseButton;
 
         public About()
@@ -32,12 +34,13 @@ namespace DZRichPresenceClient.Forms
             this.RepositoryLink = new System.Windows.Forms.LinkLabel();
             this.WorkshopLink = new System.Windows.Forms.LinkLabel();
             this.Logo = new System.Windows.Forms.PictureBox();
+            this.NotificationSettingCheckbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
             this.SuspendLayout();
             // 
             // CloseButton
             // 
-            this.CloseButton.Location = new System.Drawing.Point(170, 71);
+            this.CloseButton.Location = new System.Drawing.Point(174, 99);
             this.CloseButton.Name = "CloseButton";
             this.CloseButton.Size = new System.Drawing.Size(86, 23);
             this.CloseButton.TabIndex = 0;
@@ -68,7 +71,7 @@ namespace DZRichPresenceClient.Forms
             // 
             // RepositoryLink
             // 
-            this.RepositoryLink.Location = new System.Drawing.Point(15, 67);
+            this.RepositoryLink.Location = new System.Drawing.Point(12, 95);
             this.RepositoryLink.Name = "RepositoryLink";
             this.RepositoryLink.Size = new System.Drawing.Size(43, 31);
             this.RepositoryLink.TabIndex = 3;
@@ -79,7 +82,7 @@ namespace DZRichPresenceClient.Forms
             // 
             // WorkshopLink
             // 
-            this.WorkshopLink.Location = new System.Drawing.Point(59, 67);
+            this.WorkshopLink.Location = new System.Drawing.Point(61, 95);
             this.WorkshopLink.Name = "WorkshopLink";
             this.WorkshopLink.Size = new System.Drawing.Size(92, 31);
             this.WorkshopLink.TabIndex = 4;
@@ -99,9 +102,22 @@ namespace DZRichPresenceClient.Forms
             this.Logo.TabIndex = 5;
             this.Logo.TabStop = false;
             // 
+            // NotificationSettingCheckbox
+            // 
+            this.NotificationSettingCheckbox.AutoSize = true;
+            this.NotificationSettingCheckbox.Checked = global::DZRichPresenceClient.Properties.Settings.Default.ShowNotifications;
+            this.NotificationSettingCheckbox.Location = new System.Drawing.Point(15, 76);
+            this.NotificationSettingCheckbox.Name = "NotificationSettingCheckbox";
+            this.NotificationSettingCheckbox.Size = new System.Drawing.Size(157, 17);
+            this.NotificationSettingCheckbox.TabIndex = 6;
+            this.NotificationSettingCheckbox.Text = "Show notification on launch";
+            this.NotificationSettingCheckbox.UseVisualStyleBackColor = true;
+            this.NotificationSettingCheckbox.CheckedChanged += new System.EventHandler(this.NotificationSettingCheckbox_CheckedChanged);
+            // 
             // About
             // 
-            this.ClientSize = new System.Drawing.Size(272, 107);
+            this.ClientSize = new System.Drawing.Size(272, 132);
+            this.Controls.Add(this.NotificationSettingCheckbox);
             this.Controls.Add(this.Logo);
             this.Controls.Add(this.WorkshopLink);
             this.Controls.Add(this.RepositoryLink);
@@ -116,6 +132,7 @@ namespace DZRichPresenceClient.Forms
             this.Text = "DayZ Rich Presence";
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -132,6 +149,12 @@ namespace DZRichPresenceClient.Forms
         private void WorkshopLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Program.OpenBrowser(Config.ModWorkshopUrl);
+        }
+
+        private void NotificationSettingCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ShowNotifications = ((CheckBox)sender).Checked;
+            Properties.Settings.Default.Save();
         }
     }
 }

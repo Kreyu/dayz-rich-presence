@@ -1,7 +1,5 @@
 ﻿using DZRichPresenceClient.Misc;
 using System;
-using System.IO;
-using System.Windows.Forms;
 
 namespace DZRichPresenceClient.RPC
 {
@@ -81,16 +79,7 @@ namespace DZRichPresenceClient.RPC
 
         private static void LogException(Exception ex)
         {
-            try { 
-                using (StreamWriter writer = File.AppendText(Game.GetLogFilePath()))
-                {
-                    writer.WriteLine(ex.ToString());
-                }
-            }
-            catch (Exception)
-            {
-                Application.Exit();
-            }
+            Logger.LogException(ex);
         }
     }
 }

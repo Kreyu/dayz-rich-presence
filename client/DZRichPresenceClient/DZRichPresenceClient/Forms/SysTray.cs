@@ -11,6 +11,7 @@ namespace DZRichPresenceClient.Forms
     {
         private NotifyIcon trayIcon;
         private readonly ContextMenu trayMenu;
+        
 
         public SysTray()
         {
@@ -19,7 +20,6 @@ namespace DZRichPresenceClient.Forms
 
             ShowBalloon("Hey, I'm running here!");
 
-            Presence.Start();
         }
 
         private ContextMenu CreateTrayMenu()
@@ -56,9 +56,11 @@ namespace DZRichPresenceClient.Forms
 
         private void ShowBalloon(string body, int timeout = 3000)
         {
-            trayIcon.BalloonTipTitle = Config.ApplicationName;
-            trayIcon.BalloonTipText = body;
-            trayIcon.ShowBalloonTip(timeout);
+            if (Properties.Settings.Default.ShowNotifications) {
+                trayIcon.BalloonTipTitle = Config.ApplicationName;
+                trayIcon.BalloonTipText = body;
+                trayIcon.ShowBalloonTip(timeout);
+            }
         }
 
         private void ShowAbout(object sender, EventArgs e)
@@ -104,6 +106,7 @@ namespace DZRichPresenceClient.Forms
             {
                 trayIcon.Dispose();
             }
+            
 
             base.Dispose(isDisposing);
         }

@@ -19,11 +19,6 @@ namespace DZRichPresenceClient.Misc
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Config.GameDataFolderName);
         }
 
-        public static string GetLogFilePath()
-        {
-            return Path.Combine(GetDataDirectory(), Config.ErrorLogFile);
-        }
-
         public static string GetPresenceFilePath()
         {
             return Path.Combine(GetDataDirectory(), Config.PresenceDataFile);

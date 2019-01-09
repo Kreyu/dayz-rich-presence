@@ -1,9 +1,9 @@
 ﻿using DZRichPresenceClient.Data;
 using DZRichPresenceClient.Forms;
+using DZRichPresenceClient.Misc;
 using System;
 using System.Diagnostics;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace DZRichPresenceClient
@@ -47,14 +47,10 @@ namespace DZRichPresenceClient
 
         public static void CheckForUpdates(bool skipSameVersionMessage = false)
         {
-            var client = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(Config.RepositoryId));
-            dynamic releases = null;
+            Version currentVersion = new Version(Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            Version latestVersion = GitHubApi.GetLatestReleaseVersion();
 
-            try
-            {
-                releases = client.Repository.Release.GetAll(Config.RepositoryOwner, Config.RepositoryId).Result;
-            }
-            catch (Exception)
+            if (latestVersion == null)
             {
                 var dialogResult = MessageBox.Show("Couldn't fetch latest release info. Do you want to check manually?", Config.ApplicationName, MessageBoxButtons.YesNo);
 
@@ -65,11 +61,6 @@ namespace DZRichPresenceClient
 
                 return;
             }
-
-            var latest = releases[0];
-
-            Version currentVersion = new Version(Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            Version latestVersion = new Version(Regex.Replace(latest.TagName, "[^0-9.]", ""));
 
             int versionDifference = latestVersion.CompareTo(currentVersion);
 
