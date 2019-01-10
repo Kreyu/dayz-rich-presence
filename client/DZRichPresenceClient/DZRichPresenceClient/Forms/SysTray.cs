@@ -20,6 +20,7 @@ namespace DZRichPresenceClient.Forms
 
             ShowBalloon("Hey, I'm running here!");
 
+            Presence.Start();
         }
 
         private ContextMenu CreateTrayMenu()

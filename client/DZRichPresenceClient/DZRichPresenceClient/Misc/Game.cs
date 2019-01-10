@@ -1,9 +1,10 @@
 ﻿using DZRichPresenceClient.Data;
+using DZRichPresenceClient.Exceptions;
 using DZRichPresenceClient.RPC;
-using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.IO;
+using TinyJson;
 
 namespace DZRichPresenceClient.Misc
 {
@@ -36,7 +37,12 @@ namespace DZRichPresenceClient.Misc
                 {
                     string json = reader.ReadToEnd();
 
-                    presenceData = JsonConvert.DeserializeObject<PresenceData>(json);
+                    presenceData = json.FromJson<PresenceData>();
+
+                    if (presenceData == null || presenceData.status == null)
+                    {
+                        throw new JsonReaderException();
+                    }
                 }
             }
             catch (Exception exception)
@@ -47,7 +53,7 @@ namespace DZRichPresenceClient.Misc
 
                     using (TextWriter writer = new StreamWriter(jsonPath, false))
                     {
-                        writer.Write(JsonConvert.SerializeObject(presenceData));
+                        writer.Write(presenceData.ToJson());
                     }
                 }
             }

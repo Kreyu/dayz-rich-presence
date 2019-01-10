@@ -1,13 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using TinyJson;
 
 namespace DZRichPresenceClient.Misc
 {
@@ -30,7 +26,7 @@ namespace DZRichPresenceClient.Misc
                 {
                     using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
-                        ReleaseMetadata metadata = JsonConvert.DeserializeObject<ReleaseMetadata>(reader.ReadToEnd());
+                        ReleaseMetadata metadata = reader.ReadToEnd().FromJson<ReleaseMetadata>();
                         string version = Regex.Replace(metadata.TagName, "[^0-9.]", "");
 
                         return new Version(version);
@@ -44,7 +40,7 @@ namespace DZRichPresenceClient.Misc
         }
         private class ReleaseMetadata
         {
-            [JsonProperty("tag_name")]
+            [DataMember(Name="tag_name")]
             public string TagName { get; set; }
         }
     }
