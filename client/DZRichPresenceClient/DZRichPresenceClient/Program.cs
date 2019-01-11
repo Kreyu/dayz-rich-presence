@@ -45,18 +45,20 @@ namespace DZRichPresenceClient
             return false;
         }
 
-        public static void CheckForUpdates(bool skipSameVersionMessage = false)
+        public static void CheckForUpdates(bool silent = false)
         {
             Version currentVersion = new Version(Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Version latestVersion = GitHubApi.GetLatestReleaseVersion();
 
             if (latestVersion == null)
             {
-                var dialogResult = MessageBox.Show("Couldn't fetch latest release info. Do you want to check manually?", Config.ApplicationName, MessageBoxButtons.YesNo);
+                if (!silent) { 
+                    var dialogResult = MessageBox.Show("Couldn't fetch latest release info. Do you want to check manually?", Config.ApplicationName, MessageBoxButtons.YesNo);
 
-                if (dialogResult == DialogResult.Yes)
-                {
-                    OpenBrowser(Config.RepositoryReleasesUrl);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        OpenBrowser(Config.RepositoryReleasesUrl);
+                    }
                 }
 
                 return;
@@ -76,7 +78,7 @@ namespace DZRichPresenceClient
                 return;
             };
 
-            if (!skipSameVersionMessage)
+            if (!silent)
             {
                 MessageBox.Show("You are running the latest version.", Config.ApplicationName);
             }
