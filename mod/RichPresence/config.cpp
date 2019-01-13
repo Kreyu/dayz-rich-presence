@@ -1,7 +1,7 @@
 // #include "BIS_AddonInfo.hpp"
 
 class CfgPatches {
-    class AmbientMod_Scripts {
+    class RichPresence_Scripts {
         units[] = {};
         weapons[] = {};
         requiredVersion = 0.1;
