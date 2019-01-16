@@ -1,4 +1,4 @@
-# Dayz Rich Presence
+# DayZ Rich Presence
 
 A mod for DayZ Standalone, integrating the Discord rich presence feature.
 
